@@ -227,7 +227,7 @@ img {vertical-align: middle;}
 }
 
 .podcasts-overlay .overlay-content {
-  background: #f0f0f0; /* Light background for the content area */
+  background: #000000; /* Light background for the content area */
   padding: 30px; /* More padding for better readability */
   overflow-y: auto; /* Ensure content is scrollable */
   max-height: 90%; /* Maximum height to ensure it doesn't overflow the viewport */
