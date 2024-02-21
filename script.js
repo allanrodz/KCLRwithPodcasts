@@ -151,3 +151,16 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 });
 
+function showPodcastsOverlay() {
+    document.getElementById('podcastsOverlay').style.display = 'flex';
+}
+
+// Assuming you have the logos within <a> tags with specific IDs
+document.getElementById('kclrLogo').onclick = function() {
+    document.getElementById('podcastsOverlay').style.display = 'none';
+}
+
+document.getElementById('catsLogo').onclick = function() {
+    document.getElementById('podcastsOverlay').style.display = 'none';
+}
+

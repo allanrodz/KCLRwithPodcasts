@@ -183,26 +183,28 @@ img {vertical-align: middle;}
 
 
 @keyframes pulse {
-  0% {
-      transform: scale(1);
+  0%, 100% {
+    transform: scale(1);
   }
   50% {
-      transform: scale(1.05);
-      background-color: #e67e22; /* Slightly change color for effect */
-  }
-  100% {
-      transform: scale(1);
+    transform: scale(0.98); /* Scale down slightly more than before */
   }
 }
 
+
+
 .podcast-banner {
   display: block;
-  width: 100%; /* Adjust based on your layout */
-  height: auto; /* Adjust based on your layout */
+  width: 100%; /* Ensure it fits within its container */
+  height: auto;
   text-align: center;
   border-radius: 5px;
   text-decoration: none; /* Remove underline from link */
+  overflow: hidden; /* Prevents content from spilling out during scale */
+  box-sizing: border-box; /* Ensures padding and border are included in width/height */
+  transform-origin: center center; /* Ensures scaling is centered */
 }
+
 
 .podcast-banner img {
   width: 100%; /* Make the image fill the container */
@@ -210,5 +212,28 @@ img {vertical-align: middle;}
   border-radius: 5px; /* Match the container's border radius */
 }
 
+
+.podcasts-overlay {
+  position: fixed; /* Cover the whole page */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000; /* Solid black background */
+  z-index: 1000; /* Ensure it's above other content */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center the content */
+}
+
+.podcasts-overlay .overlay-content {
+  background: #f0f0f0; /* Light background for the content area */
+  padding: 30px; /* More padding for better readability */
+  overflow-y: auto; /* Ensure content is scrollable */
+  max-height: 90%; /* Maximum height to ensure it doesn't overflow the viewport */
+  width: 90%; /* Use more screen space for podcasts content */
+  border-radius: 10px; /* Rounded corners for a softer look */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow for depth */
+}
 
 
