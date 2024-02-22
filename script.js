@@ -1,6 +1,6 @@
-// script.js
 document.addEventListener('DOMContentLoaded', function() {
     const schedule = {
+        // Your schedule object here
         "Monday": [
             { start: "00:00", show: "KCLR Through The Night" },
             { start: "07:00", show: "KCLR Breakfast with John Walsh" },
@@ -82,10 +82,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const now = new Date();
         const dayOfWeek = now.toLocaleString('en-us', {weekday: 'long'});
         const currentTime = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2);
-    
         const todaysSchedule = schedule[dayOfWeek];
         let currentShow = "Show information not available";
-    
+
         for (let i = 0; i < todaysSchedule.length; i++) {
             const show = todaysSchedule[i];
             if (currentTime >= show.start && (i === todaysSchedule.length - 1 || currentTime < todaysSchedule[i + 1].start)) {
@@ -93,15 +92,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
             }
         }
-    
         return currentShow;
     }
-    
+
     function updateBanner() {
         const textSpan = document.getElementById('now-playing-text');
         textSpan.textContent = "Now Playing: " + getCurrentShow();
     }
-    
+
     updateBanner();
     setInterval(updateBanner, 60000);
 
@@ -131,36 +129,31 @@ document.addEventListener('DOMContentLoaded', function() {
         items[currentIndex].style.display = 'block';
     }
 
-    
-});
-
-document.addEventListener('DOMContentLoaded', function() {
+    // Schedule Overlay
     const openScheduleButton = document.getElementById('openSchedule');
     const scheduleOverlay = document.getElementById('scheduleOverlay');
-
-    // Function to open the overlay
     openScheduleButton.onclick = function() {
         scheduleOverlay.style.display = 'block';
     };
-
-    // Function to close the overlay if outside click
     scheduleOverlay.onclick = function(event) {
         if (event.target == scheduleOverlay) {
             scheduleOverlay.style.display = "none";
         }
     };
+
+    // Podcasts Overlay
+    function showPodcastsOverlay() {
+        const podcastsOverlay = document.getElementById('podcastsOverlay');
+        podcastsOverlay.style.display = 'flex';
+    }
+
+    // Binding the showPodcastsOverlay function to the podcast banner click event
+    const podcastBanner = document.querySelector('.podcast-banner');
+    podcastBanner.addEventListener('click', showPodcastsOverlay);
+
+    podcastsOverlay.addEventListener('click', function(event) {
+        if (event.target == podcastsOverlay) {
+            podcastsOverlay.style.display = 'none';
+        }
+    });
 });
-
-function showPodcastsOverlay() {
-    document.getElementById('podcastsOverlay').style.display = 'flex';
-}
-
-// Assuming you have the logos within <a> tags with specific IDs
-document.getElementById('kclrLogo').onclick = function() {
-    document.getElementById('podcastsOverlay').style.display = 'none';
-}
-
-document.getElementById('catsLogo').onclick = function() {
-    document.getElementById('podcastsOverlay').style.display = 'none';
-}
-

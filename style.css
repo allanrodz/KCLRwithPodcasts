@@ -209,27 +209,28 @@ img {vertical-align: middle;}
 }
 
 
-.podcasts-overlay {
-  position: fixed; /* Cover the whole page */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #000; /* Solid black background */
-  z-index: 1000; /* Ensure it's above other content */
-  display: flex;
-  justify-content: center;
-  align-items: center; /* Center the content */
+.podcasts-overlay .overlay-content {
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  padding: 20px; /* Space around the content */
+  box-sizing: border-box; /* Include padding and border in the element's size */
+  background-color: #000; /* Black background for the podcasts overlay */
+  border-radius: 10px; /* Rounded corners */
 }
 
-.podcasts-overlay .overlay-content {
-  background: #000000; /* Light background for the content area */
-  padding: 30px; /* More padding for better readability */
-  overflow-y: auto; /* Ensure content is scrollable */
-  max-height: 90%; /* Maximum height to ensure it doesn't overflow the viewport */
-  width: 90%; /* Use more screen space for podcasts content */
-  border-radius: 10px; /* Rounded corners for a softer look */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow for depth */
+/* Adjust the .podcasts-overlay specifically for the GIF content */
+.podcasts-overlay .overlay-content img {
+  width: 100%; /* Full width of the content area */
+  max-width: 640px; /* Limit the width to maintain aspect ratio */
+  height: auto; /* Adjust height automatically */
+  aspect-ratio: 9 / 16; /* Maintain a 9:16 aspect ratio for the GIF */
 }
+
+/* Ensure clicking the overlay outside the content closes it */
+.overlay:not(.overlay-content) {
+  cursor: pointer;
+}
+
 
 
