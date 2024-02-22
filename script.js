@@ -78,6 +78,27 @@ document.addEventListener('DOMContentLoaded', function() {
         ]
     };
 
+    // Slideshow Functionality
+    let slideIndex = 0;
+    function showSlides() {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {slideIndex = 1}
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";  
+        dots[slideIndex-1].className += " active";
+        setTimeout(showSlides, 5000); // Change image every 5 seconds
+    }
+    showSlides();
+
+    // Now Playing Banner
     function getCurrentShow() {
         const now = new Date();
         const dayOfWeek = now.toLocaleString('en-us', {weekday: 'long'});
@@ -99,10 +120,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const textSpan = document.getElementById('now-playing-text');
         textSpan.textContent = "Now Playing: " + getCurrentShow();
     }
-
     updateBanner();
     setInterval(updateBanner, 60000);
 
+    // Schedule Carousel Functionality
     const carouselContainer = document.querySelector('.carousel-items');
     Object.keys(schedule).forEach(day => {
         const dayDiv = document.createElement('div');
@@ -129,7 +150,35 @@ document.addEventListener('DOMContentLoaded', function() {
         items[currentIndex].style.display = 'block';
     }
 
-    // Schedule Overlay
+    // Radio Player Toggle
+    const toggleButton = document.getElementById('togglePlayer');
+    const icon = toggleButton.querySelector('i'); // Select the icon within the button
+    const playerContainer = document.getElementById('playerContainer');
+    let playerActive = true;
+
+    toggleButton.addEventListener('click', function() {
+        if (playerActive) {
+            // Stop and remove the iframe
+            playerContainer.innerHTML = '';
+            toggleButton.innerHTML = '<i class="fas fa-power-off" style="color: green;"></i> Turn ON Radio'; // Update button text and icon color to green
+            playerActive = false;
+        } else {
+            // Re-create and append the iframe
+            const iframe = document.createElement('iframe');
+            iframe.setAttribute('src', 'https://tunein.com/embed/player/s80564/');
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.frameBorder = 'no';
+            iframe.scrolling = 'no';
+            iframe.allowFullscreen = true;
+            playerContainer.appendChild(iframe);
+            toggleButton.innerHTML = '<i class="fas fa-power-off" style="color: red;"></i> Turn OFF Radio'; // Update button text back and icon color to red
+            playerActive = true;
+        }
+    });
+
+
+    // Schedule and Podcasts Overlay Functionality
     const openScheduleButton = document.getElementById('openSchedule');
     const scheduleOverlay = document.getElementById('scheduleOverlay');
     openScheduleButton.onclick = function() {
@@ -141,14 +190,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Podcasts Overlay
     function showPodcastsOverlay() {
         const podcastsOverlay = document.getElementById('podcastsOverlay');
         podcastsOverlay.style.display = 'flex';
     }
-
-    // Binding the showPodcastsOverlay function to the podcast banner click event
-    const podcastBanner = document.querySelector('.podcast-banner');
+    const podcastBanner = document.querySelector('.podcast-banner-slide');
     podcastBanner.addEventListener('click', showPodcastsOverlay);
 
     podcastsOverlay.addEventListener('click', function(event) {
